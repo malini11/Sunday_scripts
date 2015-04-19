@@ -26,7 +26,7 @@ gap.in %>%
   filter(year < 1990) %>%
   group_by(continent) %>%
   summarize(mean = mean(pop))
-
+data(iris)
 attach(iris)
 #install.packages("tidyr", dependencies = TRUE)
 library("tidyr")
