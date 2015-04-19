@@ -3,8 +3,7 @@
 # 4/19/15
 
 # Install dplyr package and dependencies
-
-install.packages("dplyr", dependencies = TRUE)
+#install.packages("dplyr", dependencies = TRUE)
 
 #Load dplyr library into working environment
 library("dplyr")
@@ -14,18 +13,27 @@ library("dplyr")
 
 gap.in <- read.table("output/combined_gapMinder.tsv", sep = "\t", header=TRUE)
 
-for (row.number in 1:10){
-  for (col.number in 1:5){
-    print(gap.in[row.number,col.number])
-  }
-  
-}
-# give rows 1 to 10 and column 1 to 5
-gap.in[1:10,1:5] 
+gap.in %>%
+filter(pop > 1500000) %>%
+  select(country, year, pop) %>%
+  group_by(country) %>%
+  summarize(min = min(pop)) -> data.out
 
-add.me <- function(x, y){
-  x + y
-}
-add.me(3,4)
+
+# Calculate the mean population per continent across all years prior to 1990
+
+gap.in %>%
+  filter(year < 1990) %>%
+  group_by(continent) %>%
+  summarize(mean = mean(pop))
+
+attach(iris)
+#install.packages("tidyr", dependencies = TRUE)
+library("tidyr")
+  
+# Turn iris dataset from wide into long format
+gather(iris, "Measurements", "value", 1:4) -> iris.long
+
+
 
 
